@@ -1,2 +1,0 @@
-# swed
-For Homework
