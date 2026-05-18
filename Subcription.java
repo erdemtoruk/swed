@@ -7,6 +7,7 @@ public class Subscription {
         this.url = url;
         this.freq = freq;
         this.channel = channel;
+    }
 
     public String getUrl() { 
         return url; 
@@ -18,3 +19,5 @@ public class Subscription {
     
     public String getChannel() { 
         return channel; 
+    }
+}
