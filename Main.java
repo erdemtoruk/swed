@@ -1,24 +1,37 @@
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * This class serves as a simulation environment to demonstrate the integration
+ * of the Observer pattern
+ *
+ * @author Erdem Toruk
+ * @version 1.3
+ */
 public class Main {
+    /**
+     * The main method that executes the simulation flow.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
+
+        // Initialize the system with the default strategy
         AppSystem controller = new AppSystem();
-        User u1 = new User();
+
+        // Create a user
+        User u1 = new User(controller);
         
-        u1.register("https://something.com", Frequency.DAILY, new MailChannel());
-        u1.modify("https://something.com", "https://google.com", Frequency.HOURLY, new SmsChannel());
+        // Register user to websites with different frequencies and channels
+        u1.register("https://google.com", Frequency.ALWAYS, new MailChannel());
+        u1.register("https://something.com", Frequency.DAILY, new SmsChannel());
 
-        controller.addObserver(u1);
-        
-        for (int i = 0; i < 4; i++) {
-            System.out.println("----------------");
-            controller.check("https://google.com");
-        }
+        // Create random live data to simulation
+        Map<String, String> liveWebData = new HashMap<>();
+        liveWebData.put("https://google.com", "First content");
+        liveWebData.put("https://something.com", "abcdef");
 
-
-        u1.modify("https://google.com", "https://youtube.com", Frequency.ALWAYS, new MailChannel());
-
-        for (int i = 0; i < 4; i++) {
-            System.out.println("----------------");
-            controller.check("https://youtube.com");
-        }
+        // Trigger the system to check tracked websites against the live data
+        controller.check(liveWebData);
     }
 }
